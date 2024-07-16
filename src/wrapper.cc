@@ -1,7 +1,7 @@
 #include "wrapper.h"
 #include "pandarGeneral_sdk/pandarGeneral_sdk.h"
-#include <pcl/io/pcd_io.h>
-#include <pcl/point_types.h>
+// #include <pcl/io/pcd_io.h>
+// #include <pcl/point_types.h>
 #include <iostream>
 #ifdef __cplusplus
 extern "C" {
@@ -21,19 +21,19 @@ void gpsCallback(double timestamp) {
 }
 
 void lidarCallback(boost::shared_ptr<PPointCloud> cld, double timestamp) {
-    if(printFlag == 1)       
-        printf("timestamp: %lf,point_size: %ld\n", timestamp, cld->points.size());
-    if(pcdFileWriteFlag == 1) {
-        frameItem++;
-        if(saveFrameIndex == frameItem) {
-            int Num = cld->points.size();                           
-            std::ofstream zos(saveFileName);
-            for (int i = 0; i < Num; i++)                             
-            {
-                zos <<  cld->points[i].x << "," << cld->points[i].y << "," << cld->points[i].z << "," << cld->points[i].intensity << "," << cld->points[i].timestamp << "," << cld->points[i].ring << std::endl;
-            }
-        }
-    }         
+    // if(printFlag == 1)       
+    //     printf("timestamp: %lf,point_size: %ld\n", timestamp, cld->points.size());
+    // if(pcdFileWriteFlag == 1) {
+    //     frameItem++;
+    //     if(saveFrameIndex == frameItem) {
+    //         int Num = cld->points.size();                           
+    //         std::ofstream zos(saveFileName);
+    //         for (int i = 0; i < Num; i++)                             
+    //         {
+    //             zos <<  cld->points[i].x << "," << cld->points[i].y << "," << cld->points[i].z << "," << cld->points[i].intensity << "," << cld->points[i].timestamp << "," << cld->points[i].ring << std::endl;
+    //         }
+    //     }
+    // }         
 }
 
 void lidarAlgorithmCallback(HS_Object3D_Object_List* object_t) {
@@ -52,29 +52,29 @@ void lidarAlgorithmCallback(HS_Object3D_Object_List* object_t) {
 
 
 void RunPcapPandarGeneralSDK(char* correctionFile, char* pcapFile, char* lidarType, char* timestampType, int runTime) {
-    PandarGeneralSDK pandarGeneral(pcapFile, \
-    lidarCallback, 0, 0, 1, lidarType, "", timestampType, true);
-    std::string filePath = correctionFile;
-    std::ifstream fin(filePath);
-    if (fin.is_open()) {
-        std::cout << "Open correction file " << filePath << " succeed" << std::endl;
-        int length = 0;
-        std::string strlidarCalibration;
-        fin.seekg(0, std::ios::end);
-        length = fin.tellg();
-        fin.seekg(0, std::ios::beg);
-        char *buffer = new char[length];
-        fin.read(buffer, length);
-        fin.close();
-        strlidarCalibration = buffer;
-        int ret = pandarGeneral.LoadLidarCorrectionFile(strlidarCalibration);
-        if (ret != 0) {
-        std::cout << "Load correction file from " << filePath <<" failed" << std::endl;
-        } else {
-        std::cout << "Load correction file from " << filePath << " succeed" << std::endl;
-        }
-    }
-    pandarGeneral.Start();
+    // PandarGeneralSDK pandarGeneral(pcapFile, \
+    // lidarCallback, 0, 0, 1, lidarType, "", timestampType, true);
+    // std::string filePath = correctionFile;
+    // std::ifstream fin(filePath);
+    // if (fin.is_open()) {
+    //     std::cout << "Open correction file " << filePath << " succeed" << std::endl;
+    //     int length = 0;
+    //     std::string strlidarCalibration;
+    //     fin.seekg(0, std::ios::end);
+    //     length = fin.tellg();
+    //     fin.seekg(0, std::ios::beg);
+    //     char *buffer = new char[length];
+    //     fin.read(buffer, length);
+    //     fin.close();
+    //     strlidarCalibration = buffer;
+    //     int ret = pandarGeneral.LoadLidarCorrectionFile(strlidarCalibration);
+    //     if (ret != 0) {
+    //     std::cout << "Load correction file from " << filePath <<" failed" << std::endl;
+    //     } else {
+    //     std::cout << "Load correction file from " << filePath << " succeed" << std::endl;
+    //     }
+    // }
+    // pandarGeneral.Start();
     sleep(runTime);
     return;
 }

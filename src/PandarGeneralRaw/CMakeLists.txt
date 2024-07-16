@@ -3,7 +3,7 @@ project(PandarGeneral)
 
 
 find_package( Boost REQUIRED )
-find_package(PCL REQUIRED COMPONENTS common)
+# find_package(PCL REQUIRED COMPONENTS common)
 
 set (CMAKE_CXX_FLAGS "-fPIC --std=c++11")
 
@@ -13,7 +13,7 @@ include_directories(
 	include
 	include/pandarGeneral
 	${Boost_INCLUDE_DIRS}
-	${PCL_INCLUDE_DIRS}
+	# ${PCL_INCLUDE_DIRS}
 )
 
 
@@ -26,7 +26,7 @@ add_library( ${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
 		${Boost_LIBRARIES}
-		${PCL_IO_LIBRARIES}
+		# ${PCL_IO_LIBRARIES}
 )
 
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_CURRENT_SOURCE_DIR})

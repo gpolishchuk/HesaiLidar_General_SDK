@@ -26,22 +26,35 @@ public:
     TranceFunc(const char* file, const char* func){
         m_cFile = file;
         m_cFunc = func;
-        struct tm *ptm;
-        struct timeb stTimeb;
-        ftime(&stTimeb);
-        ptm = localtime(&stTimeb.time);
-        printf("[T] %02d:%02d:%02d.%03d pid:%d tid:%10d ->[File:%s Function:%s ]\n", ptm->tm_hour, ptm->tm_min, ptm->tm_sec, stTimeb.millitm, getpid(), std::hash<std::thread::id>()(std::this_thread::get_id()), m_cFile, m_cFunc);
+        // struct tm *ptm;
+        // struct timeb stTimeb;
+        // ftime(&stTimeb);
+        // ptm = localtime(&stTimeb.time);
+        struct timeval tv;
+        gettimeofday(&tv, nullptr);
+        int hr  = tv.tv_sec / 3600;
+        int min = (tv.tv_sec % 3600) / 60;
+        int sec = tv.tv_sec % 60;
+        int ms  = tv.tv_usec / 1000;
+        printf("[T] %02d:%02d:%02d.%03d pid:%d tid:%10ld ->[File:%s Function:%s ]\n", hr, min, sec, ms, getpid(), std::hash<std::thread::id>()(std::this_thread::get_id()), m_cFile, m_cFunc);
     }
     ~TranceFunc(){
-        struct tm *ptm;
-        struct timeb stTimeb;
-        ftime(&stTimeb);
-        ptm = localtime(&stTimeb.time);
-        printf("[T] %02d:%02d:%02d.%03d pid:%d tid:%10d <-[File:%s Function:%s ]\n", ptm->tm_hour, ptm->tm_min, ptm->tm_sec, stTimeb.millitm, getpid(), std::hash<std::thread::id>()(std::this_thread::get_id()), m_cFile, m_cFunc);
+        // struct tm *ptm;
+        // struct timeb stTimeb;
+        // ftime(&stTimeb);
+        // ptm = localtime(&stTimeb.time);
+        struct timeval tv;
+        gettimeofday(&tv, nullptr);
+        int hr  = tv.tv_sec / 3600;
+        int min = (tv.tv_sec % 3600) / 60;
+        int sec = tv.tv_sec % 60;
+        int ms  = tv.tv_usec / 1000;
+        printf("[T] %02d:%02d:%02d.%03d pid:%d tid:%10ld <-[File:%s Function:%s ]\n", hr, min, sec, ms, getpid(), std::hash<std::thread::id>()(std::this_thread::get_id()), m_cFile, m_cFunc);
     }
     const char* m_cFile;
     const char* m_cFunc;
 };
+
 
 #define LOG_D(format,...) {\
     struct tm *ptm;\
