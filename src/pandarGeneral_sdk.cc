@@ -20,6 +20,7 @@
 #include "log.h"
 #include "version.h"
 #include <fstream>
+#include <iostream>
 
 #define PANDARGENERALSDK_TCP_COMMAND_PORT (9347)
 

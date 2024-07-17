@@ -17,8 +17,8 @@
 #ifndef SRC_PANDARGENERAL_INTERNAL_H_
 #define SRC_PANDARGENERAL_INTERNAL_H_
 
-#include <pcl/io/pcd_io.h>
-#include <pcl/point_types.h>
+// #include <pcl/io/pcd_io.h>
+// #include <pcl/point_types.h>
 #include <pthread.h>
 #include <semaphore.h>
 
@@ -359,14 +359,14 @@ typedef struct PacketsBuffer_s {
     m_iterPush++;
 
     if (m_iterPush == m_iterCalc) {
-      printf("buffer don't have space!,%d\n", m_iterPush - m_buffers.begin());
+      printf("buffer don't have space!,%ld\n", m_iterPush - m_buffers.begin());
       return 0;
     }
     if(((m_iterPush - m_iterCalc) > MAX_ITERATOR_DIFF) ||
-    ((m_iterPush < m_iterCalc) && (m_iterCalc - m_iterPush) < m_buffers.size() - MAX_ITERATOR_DIFF)){
+    ((m_iterPush < m_iterCalc) && (m_iterCalc - m_iterPush) < (long int)m_buffers.size() - MAX_ITERATOR_DIFF)){
 
       while((((m_iterPush - m_iterCalc) > MAX_ITERATOR_DIFF) ||
-      ((m_iterPush < m_iterCalc) && (m_iterCalc - m_iterPush) < m_buffers.size() - MAX_ITERATOR_DIFF)))
+      ((m_iterPush < m_iterCalc) && (m_iterCalc - m_iterPush) < (long int)m_buffers.size() - MAX_ITERATOR_DIFF)))
         usleep(1000);
     }
 

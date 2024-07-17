@@ -15,6 +15,7 @@
  *****************************************************************************/
 
 #include <sstream>
+#include <iostream>
 
 #include "input.h"
 #include "pandarGeneral_internal.h"
@@ -972,8 +973,8 @@ void PandarGeneral_Internal::ProcessLiarPacket() {
       continue;
     }
 
-    outMsg->header.frame_id = frame_id_;
-    outMsg->height = 1;
+    // outMsg->header.frame_id = frame_id_;
+    // outMsg->height = 1;
   }
 }
 
@@ -1847,19 +1848,19 @@ void PandarGeneral_Internal::CalcXTPointXYZIT(HS_LIDAR_XT_Packet *pkt, int block
       }
     }
     else{
-      cld->points.assign(m_vPointCloud.begin(), m_vPointCloud.begin() + m_iPointCloudIndex);
-      cld->width = (uint32_t)cld->points.size();
-      cld->height = 1;
+      cld->assign(m_vPointCloud.begin(), m_vPointCloud.begin() + m_iPointCloudIndex);
+      // cld->width = (uint32_t)cld->points.size();
+      // cld->height = 1;
       m_iPointCloudIndex = 0;
     }
-    pcl_callback_(cld, cld->points[0].timestamp);
+    pcl_callback_(cld, (*cld)[0].timestamp);
     if (pcl_type_) {
       for (int i=0; i<chLaserNumber; i++) {
         m_vPointCloudList[i].clear();
         m_vPointCloudList[i].reserve(MAX_POINT_CLOUD_NUM_PER_CHANNEL);
-        cld->points.clear();
-        cld->width = (uint32_t)cld->points.size();
-        cld->height = 1;
+        cld->clear();
+        // cld->width = (uint32_t)cld->points.size();
+        // cld->height = 1;
       }
     }
   }
